@@ -1,0 +1,86 @@
+CREATE DATABASE IF NOT EXISTS no018_specialtypromotion
+  DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE no018_specialtypromotion;
+
+CREATE TABLE IF NOT EXISTS `user` (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(64) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  avatar VARCHAR(500), location VARCHAR(255), sex VARCHAR(16), age INT, mobile VARCHAR(32),
+  role VARCHAR(32) NOT NULL DEFAULT 'USER', create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS merchant (
+  id INT PRIMARY KEY AUTO_INCREMENT, user_id INT NOT NULL UNIQUE,
+  hometown VARCHAR(255), idcard VARCHAR(32), address VARCHAR(255), store_name VARCHAR(128), products VARCHAR(500),
+  CONSTRAINT fk_merchant_user FOREIGN KEY (user_id) REFERENCES `user`(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS category (
+  id INT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(64) NOT NULL UNIQUE, sort INT NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS node (
+  id INT PRIMARY KEY AUTO_INCREMENT, user_id INT NOT NULL, category_id INT,
+  title VARCHAR(200) NOT NULL, content LONGTEXT, images TEXT, videos TEXT, show_img VARCHAR(500),
+  address VARCHAR(255), city VARCHAR(64), status VARCHAR(32) DEFAULT 'UNAUTHORIZED',
+  audit_status VARCHAR(32) DEFAULT 'WAITING_AUDIT', pageview INT NOT NULL DEFAULT 0,
+  authorized_user VARCHAR(64), authorized_time DATETIME, authorized_file VARCHAR(500),
+  create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_node_user(user_id), INDEX idx_node_city(city), INDEX idx_node_category(category_id),
+  CONSTRAINT fk_node_user FOREIGN KEY (user_id) REFERENCES `user`(id) ON DELETE CASCADE,
+  CONSTRAINT fk_node_category FOREIGN KEY (category_id) REFERENCES category(id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS goods (
+  id INT PRIMARY KEY AUTO_INCREMENT, user_id INT NOT NULL, title VARCHAR(200) NOT NULL,
+  content LONGTEXT, images TEXT, show_img VARCHAR(500), price DECIMAL(10,2) NOT NULL DEFAULT 0,
+  inventory INT NOT NULL DEFAULT 0, create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_goods_user(user_id), CONSTRAINT fk_goods_user FOREIGN KEY (user_id) REFERENCES `user`(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS node_goods (
+  id INT PRIMARY KEY AUTO_INCREMENT, node_id INT NOT NULL, goods_id INT NOT NULL, UNIQUE KEY uk_node_goods(node_id,goods_id),
+  CONSTRAINT fk_ng_node FOREIGN KEY(node_id) REFERENCES node(id) ON DELETE CASCADE,
+  CONSTRAINT fk_ng_goods FOREIGN KEY(goods_id) REFERENCES goods(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS node_like (
+  id INT PRIMARY KEY AUTO_INCREMENT, node_id INT NOT NULL, user_id INT NOT NULL, score INT NOT NULL DEFAULT 0,
+  create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, UNIQUE KEY uk_node_like(node_id,user_id),
+  CONSTRAINT fk_like_node FOREIGN KEY(node_id) REFERENCES node(id) ON DELETE CASCADE,
+  CONSTRAINT fk_like_user FOREIGN KEY(user_id) REFERENCES `user`(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS node_comment (
+  id INT PRIMARY KEY AUTO_INCREMENT, node_id INT NOT NULL, parent_id INT, from_id INT NOT NULL, to_id INT,
+  content TEXT NOT NULL, create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_comment_node(node_id), CONSTRAINT fk_comment_node FOREIGN KEY(node_id) REFERENCES node(id) ON DELETE CASCADE,
+  CONSTRAINT fk_comment_from FOREIGN KEY(from_id) REFERENCES `user`(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS feedback (
+  id INT PRIMARY KEY AUTO_INCREMENT, user_id INT NOT NULL, content TEXT NOT NULL, images TEXT,
+  reply_content TEXT, reply_time DATETIME, create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_feedback_user(user_id), CONSTRAINT fk_feedback_user FOREIGN KEY(user_id) REFERENCES `user`(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS user_goods (
+  id INT PRIMARY KEY AUTO_INCREMENT, user_id INT NOT NULL, goods_id INT NOT NULL, merchant_id INT NOT NULL,
+  create_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_ug_user(user_id), INDEX idx_ug_merchant(merchant_id),
+  CONSTRAINT fk_ug_user FOREIGN KEY(user_id) REFERENCES `user`(id),
+  CONSTRAINT fk_ug_goods FOREIGN KEY(goods_id) REFERENCES goods(id),
+  CONSTRAINT fk_ug_merchant FOREIGN KEY(merchant_id) REFERENCES `user`(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS menu (
+  id INT PRIMARY KEY AUTO_INCREMENT, auth_name VARCHAR(64) NOT NULL, path VARCHAR(128), parent_id INT DEFAULT 0, `order` INT DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE IF NOT EXISTS role_menu (
+  role_id INT NOT NULL, menu_id INT NOT NULL, PRIMARY KEY(role_id,menu_id),
+  CONSTRAINT fk_rm_menu FOREIGN KEY(menu_id) REFERENCES menu(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT IGNORE INTO `user` (id,name,password,role) VALUES (1,'admin','admin','ADMIN');
+INSERT IGNORE INTO category (id,name,sort) VALUES (1,'农产品',1),(2,'乡村文化',2),(3,'旅游推荐',3);

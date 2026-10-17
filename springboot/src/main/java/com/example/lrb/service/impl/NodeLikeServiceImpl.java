@@ -1,0 +1,3 @@
+package com.example.lrb.service.impl;
+import com.example.lrb.dao.NodeLikeDao; import com.example.lrb.pojo.NodeLike; import com.example.lrb.service.NodeLikeService; import com.example.lrb.vo.JsonResult; import org.springframework.stereotype.Service; import java.time.LocalDateTime;
+@Service public class NodeLikeServiceImpl implements NodeLikeService { private final NodeLikeDao dao; public NodeLikeServiceImpl(NodeLikeDao dao){this.dao=dao;} public JsonResult<NodeLike> insert(NodeLike n){NodeLike q=new NodeLike();q.setNodeId(n.getNodeId());q.setUserId(n.getUserId());NodeLike old=dao.selectOne(q);if(old!=null){n.setId(old.getId());dao.updateByPrimaryKeySelective(n);}else{n.setCreateTime(LocalDateTime.now());dao.insertSelective(n);}return JsonResult.ok(n);} }

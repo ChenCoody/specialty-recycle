@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${DB_URL:jdbc:mysql://localhost:3306/no018_specialtypromotion?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai}
+  servlet:
+    multipart:
+      max-file-size: 1GB
+      max-request-size: 1GB
+
+  jackson:
+    default-property-inclusion: non_null
+    date-format: "yyyy-MM-dd HH:mm:ss"
+  thymeleaf:
+    cache: false
+
+mapper:
+  enum-as-simple-type: true
+mybatis:
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+
+aliyum:
+ oss:
+   endpoint: oss-cn-beijing.aliyuncs.com
+   accessKeyId: ${ALIYUN_OSS_ACCESS_KEY_ID:}
+   accessKeySecret: ${ALIYUN_OSS_ACCESS_KEY_SECRET:}
+   bucketName: fvti-competition
+   bucketDomain: https://fvti-competition.oss-cn-beijing.aliyuncs.com/
+   avatarSuffix: .png
+
+poem:
+  challenge-generate-question-count: 10
+  pk-generate-question-count: 20
+logging:
+  level:
+    com:
+      example:
+        lrb:
+          dao: debug
+server:
+  port: 8080

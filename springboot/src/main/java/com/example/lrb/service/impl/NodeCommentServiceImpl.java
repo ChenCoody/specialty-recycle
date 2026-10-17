@@ -1,0 +1,3 @@
+package com.example.lrb.service.impl;
+import com.example.lrb.dao.NodeCommentDao; import com.example.lrb.pojo.NodeComment; import com.example.lrb.service.NodeCommentService; import com.example.lrb.vo.JsonResult; import org.springframework.stereotype.Service; import java.time.LocalDateTime;
+@Service public class NodeCommentServiceImpl implements NodeCommentService { private final NodeCommentDao dao; public NodeCommentServiceImpl(NodeCommentDao dao){this.dao=dao;} public JsonResult<NodeComment> insert(NodeComment c){c.setCreateTime(LocalDateTime.now());dao.insertSelective(c);return JsonResult.ok(c);} }

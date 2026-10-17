@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.lrb.dao.NodeDao">
+  <resultMap id="NodeMap" type="com.example.lrb.pojo.Node">
+    <id property="id" column="id"/>
+    <association property="user" javaType="com.example.lrb.pojo.User" columnPrefix="author_"/>
+    <association property="merchant" javaType="com.example.lrb.pojo.Merchant" columnPrefix="merchant_"/>
+  </resultMap>
+  <resultMap id="NodeDetailMap" type="com.example.lrb.pojo.Node" extends="NodeMap">
+    <collection property="commentList" column="id" select="selectComments"/>
+    <collection property="goodsList" column="id" select="selectGoods"/>
+  </resultMap>
+  <sql id="nodeColumns">n.*,u.id author_id,u.name author_name,u.avatar author_avatar,u.role author_role,m.id merchant_id,m.store_name merchant_store_name,COALESCE(AVG(nl.score),0) likes,COUNT(DISTINCT nl.id) like_count</sql>
+  <sql id="nodeJoins">JOIN `user` u ON u.id=n.user_id LEFT JOIN merchant m ON m.user_id=n.user_id LEFT JOIN node_like nl ON nl.node_id=n.id</sql>
+  <select id="queryListByUserId" resultMap="NodeMap">SELECT <include refid="nodeColumns"/> FROM node n <include refid="nodeJoins"/> WHERE n.user_id=#{userId} GROUP BY n.id ORDER BY n.create_time DESC</select>
+  <update id="increasePageview">UPDATE node SET pageview=pageview+1 WHERE id=#{nodeId}</update>
+  <select id="queryById" resultMap="NodeDetailMap">SELECT <include refid="nodeColumns"/>,MAX(CASE WHEN nl.user_id=#{userId} THEN 1 ELSE 0 END) is_like FROM node n <include refid="nodeJoins"/> WHERE n.id=#{nodeId} GROUP BY n.id</select>
+  <select id="queryListByCategoryId" resultMap="NodeMap">SELECT <include refid="nodeColumns"/> FROM node n <include refid="nodeJoins"/><where>n.audit_status='AUDIT_PASS'<if test="categoryId != null">AND n.category_id=#{categoryId}</if><if test="title != null and title != ''">AND n.title LIKE CONCAT('%',#{title},'%')</if><if test="city != null and city != ''">AND n.city=#{city}</if></where> GROUP BY n.id ORDER BY n.create_time DESC</select>
+  <select id="queryListAll" resultMap="NodeMap">SELECT <include refid="nodeColumns"/> FROM node n <include refid="nodeJoins"/><where><if test="categoryId != null">n.category_id=#{categoryId}</if><if test="title != null and title != ''">AND n.title LIKE CONCAT('%',#{title},'%')</if><if test="city != null and city != ''">AND n.city=#{city}</if></where> GROUP BY n.id ORDER BY n.create_time DESC</select>
+  <select id="selectComments" resultType="com.example.lrb.pojo.NodeComment">SELECT c.*,fu.name from_name,fu.avatar from_avatar,tu.name to_name FROM node_comment c JOIN `user` fu ON fu.id=c.from_id LEFT JOIN `user` tu ON tu.id=c.to_id WHERE c.node_id=#{id} ORDER BY c.create_time</select>
+  <select id="selectGoods" resultType="com.example.lrb.pojo.Goods">SELECT g.* FROM goods g JOIN node_goods ng ON ng.goods_id=g.id WHERE ng.node_id=#{id}</select>
+</mapper>

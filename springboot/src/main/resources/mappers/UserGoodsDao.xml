@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.lrb.dao.UserGoodsDao">
+  <resultMap id="UserGoodsMap" type="com.example.lrb.pojo.UserGoods"><id property="id" column="ug_id"/><association property="user" javaType="com.example.lrb.pojo.User" columnPrefix="u_"/><association property="goods" javaType="com.example.lrb.pojo.Goods" columnPrefix="g_"/></resultMap>
+  <sql id="cols">ug.id ug_id,ug.user_id,ug.goods_id,ug.merchant_id,ug.create_time,u.id u_id,u.name u_name,u.avatar u_avatar,g.id g_id,g.user_id g_user_id,g.title g_title,g.content g_content,g.images g_images,g.show_img g_show_img,g.price g_price,g.inventory g_inventory,g.create_time g_create_time</sql>
+  <select id="selectListByPayUserId" resultMap="UserGoodsMap">SELECT <include refid="cols"/> FROM user_goods ug JOIN `user` u ON u.id=ug.user_id JOIN goods g ON g.id=ug.goods_id WHERE ug.user_id=#{id} ORDER BY ug.create_time DESC</select>
+  <select id="selectListByMerchantId" resultMap="UserGoodsMap">SELECT <include refid="cols"/> FROM user_goods ug JOIN `user` u ON u.id=ug.user_id JOIN goods g ON g.id=ug.goods_id WHERE ug.merchant_id=#{id} ORDER BY ug.create_time DESC</select>
+</mapper>
