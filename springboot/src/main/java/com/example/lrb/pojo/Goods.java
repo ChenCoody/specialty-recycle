@@ -18,6 +18,9 @@ public class Goods {
     private String showImg;
     private BigDecimal price;
     private Integer inventory;
+    private BigDecimal estimatedWeight;
+    private String address;
+    private String contactMobile;
     private LocalDateTime createTime;
     @Transient private User user;
     @Transient private Merchant merchant;

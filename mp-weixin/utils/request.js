@@ -80,11 +80,20 @@ export const upload = (params) => {
       filePath: params.path,
       name: "file",
       success: (result) => {
-        const res = JSON.parse(result.data);
-        resolve(res);
+        try {
+          const res = typeof result.data === 'string' ? JSON.parse(result.data) : result.data;
+          if (res.status !== 200) {
+            wx.showToast({ title: res.message || '上传失败', icon: 'none' });
+          }
+          resolve(res);
+        } catch (e) {
+          wx.showToast({ title: '上传响应格式错误', icon: 'none' });
+          reject(e);
+        }
       },
       fail: (error) => {
-        reject(reject);
+        wx.showToast({ title: '图片上传失败，请检查后端服务', icon: 'none' });
+        reject(error);
       },
       complete() {
         loadTimes--;

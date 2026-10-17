@@ -6,7 +6,8 @@ import { list as getNodeList } from "../../api/node"
 Page({
   data: {
     nodeList: [],
-    selectCity: ""
+    selectCity: "",
+    searchText: ""
   },
   searchTimer: -1,
   reqParams: {
@@ -56,6 +57,12 @@ Page({
       this.reqParams.title = title
       this.queryNodeList()
     }, 1000);
+  },
+  selectCategory(e) {
+    const keyword = e.currentTarget.dataset.keyword;
+    this.reqParams.title = keyword;
+    this.setData({ searchText: keyword });
+    this.queryNodeList();
   },
   onHide() {
   },

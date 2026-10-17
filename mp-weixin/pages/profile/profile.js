@@ -1,110 +1,52 @@
-// pages/profile/profile.js
 const app = getApp();
-import regeneratorRuntime from "../../lib/runtime/runtime";
-import { login as loginByData } from "../../api/user"
+import { listByUserId, deleteGoods } from "../../api/goods"
 
 Page({
-
-  /**
-   * 页面的初始数据
-   */
-  data: {
-    user: {},
-  },
-
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
-  },
-
-  init() {
-    const user = wx.getStorageSync("user") || {}
-    if (!user || !user.id) {
-      wx.navigateTo({
-        url: '/pages/login/login',
-        success: (result) => {
-
-        },
-        fail: () => { },
-        complete: () => { }
-      });
-    } else {
-      this.setData({ user })
-      wx.stopPullDownRefresh()
+  data: { user: {}, goodsList: [] },
+  onShow() { this.init(); },
+  onPullDownRefresh() { this.init(); },
+  async init() {
+    const user = wx.getStorageSync("user") || {};
+    if (!user.id) {
+      wx.stopPullDownRefresh();
+      wx.navigateTo({ url: "/pages/login/login" });
+      return;
+    }
+    try {
+      const result = await listByUserId();
+      this.setData({ user, goodsList: result.data || [] });
+    } finally {
+      wx.stopPullDownRefresh();
     }
   },
-
-  logout() {
+  deleteGoods(e) {
+    const index = e.currentTarget.dataset.index;
+    const item = this.data.goodsList[index];
     wx.showModal({
-      title: '提示',
-      content: '是否退出小程序',
-      showCancel: true,
-      cancelText: '取消',
-      cancelColor: '#000000',
-      confirmText: '确定',
-      confirmColor: '#3CC51F',
-      success: (result) => {
-        if (result.confirm) {
-          wx.clearStorageSync();
-          wx.switchTab({
-            url: '/pages/index/index',
-          });
-        }
-      },
-      fail: () => { },
-      complete: () => { }
+      title: "删除商品",
+      content: `确定删除“${item.title}”吗？`,
+      success: async result => {
+        if (!result.confirm) return;
+        const response = await deleteGoods({ id: item.id });
+        app.handleRes(response, "", () => {
+          const goodsList = this.data.goodsList.slice();
+          goodsList.splice(index, 1);
+          this.setData({ goodsList });
+        });
+      }
     });
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    this.init()
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-    this.init()
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  logout() {
+    wx.showModal({
+      title: "退出登录",
+      content: "确定退出当前账号吗？",
+      success: result => {
+        if (result.confirm) {
+          wx.clearStorageSync();
+          this.setData({ user: {}, goodsList: [] });
+          wx.switchTab({ url: "/pages/index/index" });
+        }
+      }
+    });
   }
-})
+});

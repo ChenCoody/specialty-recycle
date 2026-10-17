@@ -27,7 +27,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#cd8062",
-    "navigationBarTitleText": "小红书",
+    "navigationBarTitleText": "旧物新生",
     "navigationBarTextStyle": "white"
   },
   "style": "v2",
@@ -45,7 +45,7 @@
       },
       {
         "pagePath": "pages/creation/creation",
-        "text": "发表",
+        "text": "发布",
         "iconPath": "./images/creation.png",
         "selectedIconPath": "./images/creation-o.png"
       },

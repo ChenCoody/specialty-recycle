@@ -1,73 +1,19 @@
-.profile .avatar_bg {
-  margin-bottom: 200rpx;
-  height: 180rpx;
-  border-radius: 0 0 200rpx 200rpx;
-  width: 100%;
-  background-color: #cd8062;
-  position: relative;
-}
-.profile .avatar_bg .user_info {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 100rpx;
-  text-align: center;
-}
-.profile .avatar_bg .user_info .user_icon {
-  width: 150rpx;
-  height: 150rpx;
-  border-radius: 50%;
-}
-.profile .avatar_bg .user_info .user_name {
-  margin-top: 20rpx;
-}
-.profile .profile_func_list {
-  display: flex;
-  flex-wrap: wrap;
-}
-.profile .profile_func_list .profile_func {
-  background-color: #fff;
-  padding: 0;
-  font-weight: normal;
-  font-size: 28rpx;
-  width: 25%;
-  height: 200rpx;
-  border: 1rpx solid rgba(0, 0, 0, 0.1);
-  border-right: none;
-  border-bottom: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.profile .profile_func_list .profile_func .profile_func_img {
-  min-width: 70rpx;
-  min-height: 70rpx;
-  width: 70rpx;
-  height: 70rpx;
-}
-.profile .profile_func_list .profile_func .profile_func_img image {
-  width: 100%;
-  height: 100%;
-}
-.profile .profile_func_list :nth-child(n + 5) {
-  border-bottom: 1rpx solid rgba(0, 0, 0, 0.1);
-}
-.profile .profile_func_list_admin .profile_func {
-  width: 20%;
-  font-size: 26rpx;
-}
-.profile .tips {
-  padding: 0 20rpx;
-}
-.profile .tips .tips_title {
-  margin: 30rpx 0;
-  border-left: 10rpx solid #cd8062;
-  padding: 10rpx;
-}
-.profile .tips .tips_column {
-  line-height: 42rpx;
-  font-size: 26rpx;
-  text-align: center;
-  color: #666;
-}
+page { background: #f7f5f2; color: #2f2824; }
+.profile { padding: 28rpx 24rpx 60rpx; }
+.user_card { display:flex; align-items:center; padding:34rpx 28rpx; border-radius:26rpx; background:linear-gradient(135deg,#49362d,#755547); color:#fff; }
+.user_icon { width:112rpx; height:112rpx; flex-shrink:0; border:5rpx solid rgba(255,255,255,.55); border-radius:50%; background:#eee; }
+.user_copy { flex:1; margin-left:24rpx; }
+.user_name { font-size:34rpx; font-weight:700; }
+.user_desc { margin-top:10rpx; color:rgba(255,255,255,.68); font-size:22rpx; }
+.logout { padding:12rpx 20rpx; border:1rpx solid rgba(255,255,255,.45); border-radius:30rpx; font-size:22rpx; }
+.product_header { display:flex; align-items:center; justify-content:space-between; margin:38rpx 4rpx 22rpx; }
+.product_title { font-size:34rpx; font-weight:700; }
+.product_count { margin-top:7rpx; color:#99908a; font-size:22rpx; }
+.publish_link { padding:15rpx 24rpx; border-radius:32rpx; background:#d5a676; color:#3c2a21; font-size:23rpx; font-weight:700; }
+.product_item { margin-bottom:18rpx; overflow:hidden; border-radius:18rpx; background:#fff; }
+.delete_tip { padding:16rpx; color:#aaa19b; font-size:21rpx; text-align:center; }
+.empty_state { margin-top:24rpx; padding:80rpx 20rpx; border-radius:24rpx; background:#fff; text-align:center; }
+.empty_icon { font-size:100rpx; opacity:.7; }
+.empty_title { margin-top:20rpx; font-size:30rpx; font-weight:700; }
+.empty_desc { margin-top:12rpx; color:#9b928c; font-size:23rpx; }
+.empty_btn { width:220rpx; margin:34rpx auto 0; padding:18rpx 0; border-radius:40rpx; background:#49362d; color:#fff; font-size:24rpx; }

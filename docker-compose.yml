@@ -1,0 +1,46 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: specialty-mysql
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: change_this_mysql_password
+      MYSQL_DATABASE: no018_specialtypromotion
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./springboot/src/main/resources/db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pchange_this_mysql_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  backend:
+    build: ./springboot
+    container_name: specialty-backend
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Shanghai
+      DB_URL: jdbc:mysql://mysql:3306/no018_specialtypromotion?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+      DB_USERNAME: root
+      DB_PASSWORD: change_this_mysql_password
+      SERVER_FORWARD_HEADERS_STRATEGY: framework
+    volumes:
+      - ./data/uploads:/app/uploads
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  web:
+    build: ./vue
+    container_name: specialty-web
+    restart: unless-stopped
+    ports:
+      - "9527:80"
+    depends_on:
+      - backend

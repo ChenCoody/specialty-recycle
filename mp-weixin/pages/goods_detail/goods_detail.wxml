@@ -5,13 +5,17 @@
         </swiper-item>
     </swiper>
 </view>
-<view class="detail_price">￥{{goodsDetail.price}}</view>
+<view class="detail_price">预估 {{goodsDetail.estimatedWeight || '--'}} 斤</view>
 <view class="detail_name_row">
     <view class="detail_name">{{goodsDetail.title}}</view>
      <view class="detail_collect" >
         <view class="iconfont {{isCollect?'icon-shoucang1':'icon-shoucang'}} "></view>
-        <view class="collect_text">库存量：{{goodsDetail.inventory}}</view>
+        <view class="collect_text">旧包旧鞋回收</view>
     </view> 
+</view>
+<view class="detail_info">
+    <view>回收地址：{{goodsDetail.address || '待补充'}}</view>
+    <view>联系电话：{{goodsDetail.contactMobile || '待补充'}}</view>
 </view>
 <view class="detail_info">
     <view class="detail_info_tilte">商品详情</view>
@@ -35,5 +39,5 @@
         <!-- <view>购物车</view> -->
     </view>
     <!-- <view class="tool_item btn_cart" bindtap="handleAddCart">加入购物车</view> -->
-    <view class="tool_item btn_buy" bind:tap="purchase">立即购买</view>
+    <view class="tool_item btn_buy" bind:tap="callContact">联系发布人</view>
 </view>

@@ -2,6 +2,38 @@ page {
   box-sizing: border-box;
 }
 
+// 首页回收业务视觉（与 index.wxss 保持同步）
+page { background: #f7f5f2; color: #28231f; }
+.top_bar { background-color: #49362d; }
+.recycle_hero { position: relative; display: flex; min-height: 300rpx; margin: 24rpx; padding: 44rpx 36rpx; overflow: hidden; box-sizing: border-box; border-radius: 28rpx; background: linear-gradient(135deg, #3f2c24 0%, #745345 100%); box-shadow: 0 16rpx 36rpx rgba(72, 48, 38, .18); }
+.hero_content { position: relative; z-index: 2; }
+.hero_tag { color: #e7c8aa; font-size: 23rpx; letter-spacing: 3rpx; }
+.hero_title { margin-top: 14rpx; color: #fff; font-size: 48rpx; font-weight: 700; letter-spacing: 3rpx; }
+.hero_desc { margin-top: 12rpx; color: rgba(255, 255, 255, .78); font-size: 24rpx; }
+.recycle_btn { width: 200rpx; margin-top: 28rpx; padding: 15rpx 0; border-radius: 40rpx; background: #d6a875; color: #3b281f; font-size: 24rpx; font-weight: 700; text-align: center; }
+.hero_mark { position: absolute; right: 14rpx; bottom: 16rpx; width: 250rpx; height: 230rpx; }
+.hero_mark text { position: absolute; filter: drop-shadow(0 12rpx 12rpx rgba(0, 0, 0, .18)); }
+.hero_bag { right: 48rpx; top: 2rpx; font-size: 116rpx; transform: rotate(7deg); }
+.hero_shoe { right: 2rpx; bottom: 0; font-size: 100rpx; transform: rotate(-10deg); }
+.service_bar { display: flex; justify-content: space-around; margin: 0 24rpx 28rpx; padding: 22rpx 10rpx; border-radius: 18rpx; background: #fff; color: #74645b; font-size: 23rpx; }
+.service_bar text { color: #b77b50; font-weight: 700; }
+.section { padding: 4rpx 24rpx 28rpx; }
+.section_head { display: flex; align-items: baseline; margin-bottom: 20rpx; }
+.section_title { font-size: 34rpx; font-weight: 700; }
+.section_subtitle { margin-left: 18rpx; color: #a0958e; font-size: 22rpx; }
+.feature_grid { display: flex; gap: 18rpx; }
+.feature_card { position: relative; flex: 1; height: 230rpx; padding: 28rpx 22rpx; overflow: hidden; box-sizing: border-box; border-radius: 24rpx; }
+.bag_card { background: linear-gradient(145deg, #ead9ca, #f8eee5); }
+.shoe_card { background: linear-gradient(145deg, #d9ddd7, #eef0eb); }
+.feature_copy { position: relative; z-index: 2; }
+.feature_title { font-size: 32rpx; font-weight: 700; }
+.feature_desc { width: 190rpx; margin-top: 8rpx; color: #786b62; font-size: 20rpx; }
+.feature_link { margin-top: 58rpx; color: #8a593c; font-size: 22rpx; font-weight: 700; }
+.feature_emoji { position: absolute; right: -8rpx; bottom: 14rpx; font-size: 90rpx; opacity: .94; }
+.goods_head { display: flex; align-items: center; padding: 8rpx 24rpx 18rpx; }
+.goods_title { flex-shrink: 0; font-size: 34rpx; font-weight: 700; }
+.goods_line { width: 100%; height: 1rpx; margin-left: 22rpx; background: #ded8d2; }
+
 .top_bar {
   display: flex;
   align-items: center;

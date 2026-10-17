@@ -43,6 +43,11 @@ Page({
       this.onShow()
     })
   },
+  callContact() {
+    const phoneNumber = this.data.goodsDetail.contactMobile;
+    if (!phoneNumber) return wx.showToast({ title: "发布人未填写手机号", icon: "none" });
+    wx.makePhoneCall({ phoneNumber });
+  },
 
   handleAddCart() {
     const cart = wx.getStorageSync("cart") || [];

@@ -1,23 +1,49 @@
-<view class="top_bar">
-    <navigator url="/pages/switch_city/switch_city?selectCity={{selectCity}}" class="city">
-        {{selectCity}}
-    </navigator>
-    <view class="search_bar">
-        <input bindinput="handleSearch" type="text" placeholder="输入内容进行搜索"></input>
-        <view class="search_icon">
-            <image class="" src="/images/search.png"></image>
+<view class="recycle_hero">
+    <view class="hero_content">
+        <view class="hero_tag">闲置焕新 · 循环利用</view>
+        <view class="hero_title">回收旧包旧鞋</view>
+        <view class="hero_desc">专业估价，让闲置物品重新流转</view>
+        <navigator class="recycle_btn" url="/pages/creation/creation">立即发布回收</navigator>
+    </view>
+    <view class="hero_mark">
+        <text class="hero_bag">👜</text>
+        <text class="hero_shoe">👟</text>
+    </view>
+</view>
+
+<view class="service_bar">
+    <view><text>✓</text> 专业鉴定</view>
+    <view><text>✓</text> 快速估价</view>
+    <view><text>✓</text> 安心交易</view>
+</view>
+
+<view class="section">
+    <view class="section_head">
+        <view class="section_title">精品专区</view>
+        <view class="section_subtitle">严选品质好物</view>
+    </view>
+    <view class="feature_grid">
+        <view class="feature_card bag_card" bindtap="selectCategory" data-keyword="包">
+            <view class="feature_copy">
+                <view class="feature_title">精品包</view>
+                <view class="feature_desc">经典设计 · 品质严选</view>
+                <view class="feature_link">立即选购 ›</view>
+            </view>
+            <text class="feature_emoji">👜</text>
+        </view>
+        <view class="feature_card shoe_card" bindtap="selectCategory" data-keyword="鞋">
+            <view class="feature_copy">
+                <view class="feature_title">精品鞋</view>
+                <view class="feature_desc">舒适潮流 · 成色优选</view>
+                <view class="feature_link">立即选购 ›</view>
+            </view>
+            <text class="feature_emoji">👟</text>
         </view>
     </view>
 </view>
-<!-- <view class="category_wrap">
-    <scroll-view class="category_list" scroll-x="true">
-        <view class="category_list">
-            <block wx:for="{{categoryList}}" wx:key="date">
-                <view bind:tap="selectCategory" data-index="{{index}}" class="category_item {{item.active?' category_item_active':''}}">
-                    <view>{{item.name}}</view>
-                </view>
-            </block>
-        </view>
-    </scroll-view>
-</view> -->
+
+<view class="goods_head">
+    <view class="goods_title">精选推荐</view>
+    <view class="goods_line"></view>
+</view>
 <nodeList list="{{nodeList}}"></nodeList>

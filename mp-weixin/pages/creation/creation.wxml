@@ -1,61 +1,25 @@
-<tabs tabs="{{tabs}}" tabStyle="{{tabStyle}}" bindtabsChange="selectTab"></tabs>
-<block wx:if="{{tabs[0].isActive}}">
-  <view style="border-left: 10rpx solid #cd8062;padding-left: 20rpx;margin-left:20rpx;margin-top:20rpx">
-    发布笔记
+<view class="publish_page">
+  <view class="publish_header">
+    <view class="publish_title">发表商品</view>
+    <view class="publish_desc">上传闲置包鞋，填写商品信息</view>
   </view>
   <view class="feedback_image_swap">
-    <button type="default" bindtap="chooseImage" class="feedback_upload_btn feedback_image_node">
-      <text class="">+</text>
+    <button bindtap="chooseImage" class="feedback_upload_btn feedback_image_node">
+      <text class="upload_plus">+</text><text class="upload_text">商品图片</text>
     </button>
-    <block wx:for="{{videoList}}" wx:key="*this" wx:for-item="item" wx:for-index="index">
+    <block wx:for="{{imageList}}" wx:key="*this">
       <view class="feedback_image feedback_image_node">
-        <video bind:tap="previewChooseImg" data-src="{{item}}" src="{{item}}"></video>
-        <icon bindtap="removeVideo" data-index="{{index}}" type="clear" size="23" color="red"></icon>
-      </view>
-    </block>
-    <block wx:for="{{imageList}}" wx:key="*this" wx:for-item="item" wx:for-index="index">
-      <view class="feedback_image feedback_image_node">
-        <image bind:tap="previewChooseImg" data-src="{{item}}" src="{{item}}"></image>
-        <icon bindtap="removeImage" data-index="{{index}}" type="clear" size="23" color="red"></icon>
+        <image mode="aspectFill" src="{{item}}"></image>
+        <icon bindtap="removeImage" data-index="{{index}}" type="clear" size="22" color="#8d5b42"></icon>
       </view>
     </block>
   </view>
   <form class="creation_form" bindsubmit="creationSubmit">
-    <input type="text" name="title" value="{{form.title}}" bindinput="inputTitle" class="creation_form_input" placeholder="标题（30字以内）"></input>
-    <editor id="editor" class="creation_form_editor" bindblur="inputContent" placeholder="正文（200字以内）"></editor>
-    <!-- <picker bindchange="categoryChange" class="creation_form_input" range="{{categoryList}}" range-key="name">
-      <view class="picker">
-        <text class="" style="color:#666">分类：</text>
-        {{form.category.name}}
-      </view>
-    </picker> -->
-    <picker bindchange="statusChange" class="creation_form_input" range="{{statusList}}" range-key="name">
-      <view class="picker">
-        <text class="" style="color:#666">认证：</text>
-        {{form.statusName}}
-      </view>
-    </picker>
-    <input type="text" name="title" value="{{form.address}}" disabled="{{true}}" bindtap="selectLocation" class="creation_form_input" placeholder="位置"></input>
-    <block wx:if="{{user.role != 'USER'}}">
-      <input type="text" name="title" value="{{selectShopTips}}" disabled="{{true}}" bindtap="selectGoods" class="creation_form_input" placeholder="绑定商品"></input>
-    </block>
-    <button form-type="submit" class="submit_btn">发布笔记</button>
+    <input type="text" value="{{form.title}}" bindinput="inputTitle" class="creation_form_input" placeholder="商品标题，如：九成新精品女包"></input>
+    <editor id="editor" class="creation_form_editor" bindready="editorReady" bindblur="inputContent" placeholder="描述品牌、成色、尺寸及瑕疵情况"></editor>
+    <view class="price_row"><input type="digit" value="{{form.estimatedWeight}}" bindinput="inputEstimatedWeight" placeholder="预估重量"></input><text>斤</text></view>
+    <input type="text" value="{{form.address}}" bindinput="inputAddress" class="creation_form_input" placeholder="回收地址"></input>
+    <input type="number" maxlength="11" value="{{form.contactMobile}}" bindinput="inputContactMobile" class="creation_form_input" placeholder="联系手机号"></input>
+    <button form-type="submit" class="submit_btn">确认发表商品</button>
   </form>
-</block>
-<block wx:if="{{tabs[1].isActive}}">
-  <nodeList bind:handleDeleteNode="handleDeleteNode" list="{{list}}"></nodeList>
-</block>
-<page-container class="goods_container" show="{{isShowContainer}}" duration="{{300}}" close-on-slide-down>
-  <scroll-view class="goods_container_scroll" scroll-y="{{true}}">
-    <view class="" wx:for="{{goodsList}}" wx:key="id">
-      <goodsItem item="{{item}}">
-        <view class="" style="display: flex;align-items: center;">
-          <radio-group style="margin-right:10rpx" bind:tap="changeRadio" data-index="{{index}}">
-            <radio checked="{{item.check}}" />
-          </radio-group>
-        </view>
-      </goodsItem>
-    </view>
-    <button style="margin:30rpx auto" bind:tap="unSelectGoods" type="primary">确认</button>
-  </scroll-view>
-</page-container>
+</view>
