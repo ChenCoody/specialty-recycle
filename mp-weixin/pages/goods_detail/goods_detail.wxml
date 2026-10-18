@@ -10,7 +10,7 @@
     <view class="detail_name">{{goodsDetail.title}}</view>
      <view class="detail_collect" >
         <view class="iconfont {{isCollect?'icon-shoucang1':'icon-shoucang'}} "></view>
-        <view class="collect_text">旧包旧鞋回收</view>
+        <view class="collect_text">旧包旧鞋旧手机回收</view>
     </view> 
 </view>
 <view class="detail_info">

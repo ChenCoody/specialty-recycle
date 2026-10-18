@@ -3,7 +3,7 @@ import { uploadImage } from "../../api/upload"
 
 const app = getApp();
 Page({
-  data: { form: { title: "旧鞋旧包", content: "大量的旧包旧鞋，5成新。", estimatedWeight: "", address: "", contactMobile: "" }, imageList: [] },
+  data: { form: { title: "旧包旧鞋旧手机", content: "大量旧包、旧鞋、旧手机，7、8成新。", estimatedWeight: "", address: "", contactMobile: "" }, imageList: [] },
   onShow() {
     const user = wx.getStorageSync("user");
     if (!user || !user.id) wx.navigateTo({ url: "/pages/login/login" });
@@ -32,9 +32,9 @@ Page({
   },
   clearForm() {
     this.createSelectorQuery().select("#editor").context(result => {
-      if (result) result.context.setContents({ html: "大量的旧包旧鞋，5成新。" });
+      if (result) result.context.setContents({ html: "大量旧包、旧鞋、旧手机，7、8成新。" });
     }).exec();
-    this.setData({ form: { title: "旧鞋旧包", content: "大量的旧包旧鞋，5成新。", estimatedWeight: "", address: "", contactMobile: "" }, imageList: [] });
+    this.setData({ form: { title: "旧包旧鞋旧手机", content: "大量旧包、旧鞋、旧手机，7、8成新。", estimatedWeight: "", address: "", contactMobile: "" }, imageList: [] });
   },
   async creationSubmit() {
     const { form, imageList } = this.data;

@@ -1,7 +1,7 @@
 <view class="publish_page">
   <view class="publish_header">
     <view class="publish_title">发表商品</view>
-    <view class="publish_desc">上传闲置包鞋，填写商品信息</view>
+    <view class="publish_desc">上传闲置包、鞋或旧手机，填写回收信息</view>
   </view>
   <view class="feedback_image_swap">
     <button bindtap="chooseImage" class="feedback_upload_btn feedback_image_node">
@@ -15,8 +15,8 @@
     </block>
   </view>
   <form class="creation_form" bindsubmit="creationSubmit">
-    <input type="text" value="{{form.title}}" bindinput="inputTitle" class="creation_form_input" placeholder="商品标题，如：九成新精品女包"></input>
-    <editor id="editor" class="creation_form_editor" bindready="editorReady" bindblur="inputContent" placeholder="描述品牌、成色、尺寸及瑕疵情况"></editor>
+    <input type="text" value="{{form.title}}" bindinput="inputTitle" class="creation_form_input" placeholder="商品标题，如：8成新旧手机"></input>
+    <editor id="editor" class="creation_form_editor" bindready="editorReady" bindblur="inputContent" placeholder="描述品类、品牌、7成新或8成新及瑕疵情况"></editor>
     <view class="price_row"><input type="digit" value="{{form.estimatedWeight}}" bindinput="inputEstimatedWeight" placeholder="预估重量"></input><text>斤</text></view>
     <input type="text" value="{{form.address}}" bindinput="inputAddress" class="creation_form_input" placeholder="回收地址"></input>
     <input type="number" maxlength="11" value="{{form.contactMobile}}" bindinput="inputContactMobile" class="creation_form_input" placeholder="联系手机号"></input>

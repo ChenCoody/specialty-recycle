@@ -1,5 +1,9 @@
 FROM public.ecr.aws/docker/library/node:16-alpine AS builder
 WORKDIR /build
+RUN apk add --no-cache git openssh-client \
+    && git config --global url."https://github.com/".insteadOf "git://github.com/" \
+    && git config --global url."https://github.com/".insteadOf "ssh://git@github.com/" \
+    && git config --global url."https://github.com/".insteadOf "git@github.com:"
 COPY package*.json ./
 RUN npm install --legacy-peer-deps
 COPY . .

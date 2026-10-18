@@ -1,13 +1,14 @@
 <view class="recycle_hero">
     <view class="hero_content">
         <view class="hero_tag">闲置焕新 · 循环利用</view>
-        <view class="hero_title">回收旧包旧鞋</view>
-        <view class="hero_desc">专业估价，让闲置物品重新流转</view>
+        <view class="hero_title">回收旧包旧鞋旧手机</view>
+        <view class="hero_desc">7、8成新均可回收，专业估价让闲置重新流转</view>
         <navigator class="recycle_btn" url="/pages/creation/creation">立即发布回收</navigator>
     </view>
     <view class="hero_mark">
         <text class="hero_bag">👜</text>
         <text class="hero_shoe">👟</text>
+        <text class="hero_phone">📱</text>
     </view>
 </view>
 
@@ -38,6 +39,14 @@
                 <view class="feature_link">立即选购 ›</view>
             </view>
             <text class="feature_emoji">👟</text>
+        </view>
+        <view class="feature_card phone_card" bindtap="selectCategory" data-keyword="手机">
+            <view class="feature_copy">
+                <view class="feature_title">旧手机</view>
+                <view class="feature_desc">7、8成新 · 专业估价</view>
+                <view class="feature_link">立即回收 ›</view>
+            </view>
+            <text class="feature_emoji">📱</text>
         </view>
     </view>
 </view>
