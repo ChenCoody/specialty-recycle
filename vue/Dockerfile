@@ -1,7 +1,7 @@
 FROM public.ecr.aws/docker/library/node:16-alpine AS builder
 WORKDIR /build
-COPY package.json package-lock.json .npmrc ./
-RUN npm ci
+COPY package*.json ./
+RUN npm install --legacy-peer-deps
 COPY . .
 RUN npm run build:prod
 
